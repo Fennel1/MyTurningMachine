@@ -5,11 +5,13 @@
 #include <QListWidgetItem>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <QScrollBar>
 #include <algorithm>
 #include <vector>
 #include <QtDebug>
 #include <QDir>
 #include <QMessageBox>
+#include <windows.h>
 
 namespace Ui {
 class MainWindow;

@@ -56,7 +56,7 @@ void MainWindow::Press_Start()
     qDebug() << ui->Input_Chars->text() << endl;
 
     ui->Table->setRowCount(2);
-    ui->Table->setColumnCount(26);
+    ui->Table->setColumnCount(300);
     order = "B" + ui->Input_Chars->text() + "B";
     for (int i=0; i<order.size(); i++){
         if (order[i] == 'B')    continue;
@@ -97,6 +97,7 @@ int MainWindow::Press_OneStep()
                     if (nowPoint+1 == order.size()) order.append('B');
                     nowPoint--;
                 }
+                if (nowPoint - 12 > 0)  ui->Table->horizontalScrollBar()->setSliderPosition(nowPoint-12);
                 flag = true;
                 break;
             }
@@ -204,11 +205,11 @@ void MainWindow::setTable()
     for (int i=0; i<order.size(); i++){
         ui->Table->setItem(0, i, new QTableWidgetItem(QString(order[i])));
         ui->Table->setItem(1, i, new QTableWidgetItem(QString(" ")));
-        ui->Table->item(0, i)->setBackgroundColor(Qt::red);
+        ui->Table->item(0, i)->setBackgroundColor(Qt::green);
     }
 
     ui->Table->setItem(1, nowPoint, new QTableWidgetItem("q" + QString::number(nowStatus)));
-    ui->Table->item(1, nowPoint)->setBackgroundColor(Qt::red);
+    ui->Table->item(1, nowPoint)->setBackgroundColor(Qt::green);
 }
 
 MainWindow::~MainWindow()
