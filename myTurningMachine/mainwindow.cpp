@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "ui_pending.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent), pending(new Pending),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -78,6 +79,7 @@ void MainWindow::Press_Start()
 
 int MainWindow::Press_OneStep()
 {
+    if (order.size() < 1)   return -1;
 //    qDebug() << "now:" << nowStatus << order[nowPoint] << endl;
     bool flag=false;
     if (nowStatus != endS){
@@ -88,7 +90,8 @@ int MainWindow::Press_OneStep()
                 order[nowPoint] = thisrules[i].Tread.data()[0];
 //                qDebug() << order << endl;
                 ui->Text_thisRule->clear();
-                ui->Text_thisRule->append('q'+QString::number(thisrules[i].SS)+','+thisrules[i].read+','+'q'+QString::number(thisrules[i].ES)+','+thisrules[i].Tread+','+thisrules[i].Go);
+                QString str='q'+QString::number(thisrules[i].SS)+','+thisrules[i].read+','+'q'+QString::number(thisrules[i].ES)+','+thisrules[i].Tread+','+thisrules[i].Go;
+                ui->Text_thisRule->append(str);
                 if (thisrules[i].Go == "R"){
                     if (nowPoint+1 == order.size()) order.append('B');
                     nowPoint++;
@@ -117,16 +120,23 @@ int MainWindow::Press_OneStep()
 
 void MainWindow::Press_AllStep()
 {
+    if (order.size() < 1)   return;
     int flag;
+    pending->show();
     while (1){
         flag = Press_OneStep();
-        if (flag == -1 || flag == 1) return;
+        if (flag == -1 || flag == 1){
+            break;
+        }
     }
+    pending->hide();
 }
 
 void MainWindow::Press_RulesList(QListWidgetItem* item)
 {
     qDebug() << item->text() << endl;
+
+    readlist.clear();
 
     QFile file("../rules/" + item->text() + ".txt");
     if (file.exists())  qDebug() << "file exists" << endl;
@@ -201,13 +211,11 @@ void MainWindow::Press_RulesList(QListWidgetItem* item)
 void MainWindow::setTable()
 {
     ui->Table->clear();
-
     for (int i=0; i<order.size(); i++){
         ui->Table->setItem(0, i, new QTableWidgetItem(QString(order[i])));
         ui->Table->setItem(1, i, new QTableWidgetItem(QString(" ")));
         ui->Table->item(0, i)->setBackgroundColor(Qt::green);
     }
-
     ui->Table->setItem(1, nowPoint, new QTableWidgetItem("q" + QString::number(nowStatus)));
     ui->Table->item(1, nowPoint)->setBackgroundColor(Qt::green);
 }

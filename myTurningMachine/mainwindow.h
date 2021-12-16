@@ -11,6 +11,7 @@
 #include <QtDebug>
 #include <QDir>
 #include <QMessageBox>
+#include <pending.h>
 #include <windows.h>
 
 namespace Ui {
@@ -45,6 +46,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    Pending *pending;
 
     Rule thisrules;
     QString ruleName;

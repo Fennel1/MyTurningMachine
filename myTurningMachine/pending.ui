@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Pending</class>
+ <widget class="QWidget" name="Pending">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>46</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>正在运行...</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
