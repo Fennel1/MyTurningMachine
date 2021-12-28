@@ -1,1 +1,1 @@
-# MyTurningMachine
+# 东北大学计算机学院计算理论图灵机课设
